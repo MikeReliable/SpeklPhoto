@@ -49,7 +49,7 @@ public class Logic {
                     existence = false;
                     for (Point point : pointsMassive) {
                         if (pointNext.equals(point)) {
-                            point.Exx = pointNext.getExx() + pointNext.getExx();
+                            point.Exx = pointNext.getExx() + point.getExx();
                             existence = true;
                         }
                     }
