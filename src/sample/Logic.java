@@ -53,8 +53,9 @@ public class Logic {
                             existence = true;
                         }
                     }
-                    if (!existence){
-                        //добавить точку в расчет
+                    if (!existence) {
+                        Point point = new Point(pointNext.getCoordinateX(), pointNext.getCoordinateY(), pointNext.getExx());
+                        pointsMassive.add(point); // добавляем новые точки
                     }
                 }
             }
