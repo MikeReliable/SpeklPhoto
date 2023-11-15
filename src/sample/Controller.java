@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -22,19 +21,7 @@ public class Controller {
     Logic selection = new Logic();
 
     @FXML
-    private TextField s01;
-
-    @FXML
-    private TextField s02;
-
-    @FXML
-    private TextField step;
-
-    @FXML
     private TextArea text;
-
-    @FXML
-    private TextField index;
 
     @FXML
     private TextArea locat;
@@ -42,7 +29,7 @@ public class Controller {
     @FXML
     void open(ActionEvent event) {
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("data file","*.DAT"));
+                new FileChooser.ExtensionFilter("data file", "*.DAT"));
         fileChooser.setInitialDirectory(new File("C:\\"));
         file = fileChooser.showOpenDialog(new Stage());
         locat.clear();
@@ -74,13 +61,4 @@ public class Controller {
             e.printStackTrace();
         }
     }
-
-//    @FXML
-//    void initialize() {
-//        assert s01 != null : "fx:id=\"s01\" was not injected: check your FXML file 'form.fxml'.";
-//        assert s02 != null : "fx:id=\"s02\" was not injected: check your FXML file 'form.fxml'.";
-//        assert step != null : "fx:id=\"step\" was not injected: check your FXML file 'form.fxml'.";
-//        assert text != null : "fx:id=\"text\" was not injected: check your FXML file 'form.fxml'.";
-//
-//    }
 }

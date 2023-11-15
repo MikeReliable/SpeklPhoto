@@ -13,16 +13,19 @@ public class Logic {
     String path;
     String fileNameCrop;
     FileWriter fileWriter;
+    FileWriter logWriter;
     boolean existence;
     DecimalFormat df = new DecimalFormat("0.000000");
     ArrayList<Point> pointsMassive = new ArrayList<>();
     ArrayList<Point> pointsMassiveNext = new ArrayList<>();
+    String log;
 
     public String find(File file) throws IOException {
 
         fileName = file.getName();
         fileNameCrop = fileName.substring(0, fileName.lastIndexOf('x') + 1);
         path = String.valueOf(file);
+        log = "Прочитано:\n" + path + "\n";
         path = path.substring(0, path.lastIndexOf("\\") + 1);
         System.out.println("fileName = " + fileName);
         System.out.println("fileNameCrop = " + fileNameCrop);
@@ -43,19 +46,24 @@ public class Logic {
             fileName = path + fileNameCrop + fileNum + ".DAT";
             File fileNext = new File(fileName);
             if (fileNext.exists()) {
+                log = log + fileName + "\n";
                 System.out.println(fileName);
+                pointsMassiveNext.clear();
                 readLines(fileNext, pointsMassiveNext);
                 for (Point pointNext : pointsMassiveNext) {
                     existence = false;
                     for (Point point : pointsMassive) {
                         if (pointNext.equals(point)) {
-                            point.Exx = pointNext.getExx() + point.getExx();
+                            point.setExx(pointNext.getExx() + point.getExx());
+                            point.setNumber(point.getNumber() + 1);
                             existence = true;
+                            break;
                         }
                     }
                     if (!existence) {
-                        Point point = new Point(pointNext.getCoordinateX(), pointNext.getCoordinateY(), pointNext.getExx());
+                        Point point = new Point(pointNext.getCoordinateX(), pointNext.getCoordinateY(), pointNext.getExx(), 1);
                         pointsMassive.add(point); // добавляем новые точки
+                        log = log + point + "\n";
                     }
                 }
             }
@@ -68,7 +76,13 @@ public class Logic {
             fileWriter.write(dfX + " " + dfY + " " + dfExx + "\n");
         }
         fileWriter.flush();
-        return "Done!";
+        for (Point point : pointsMassive) {
+            log = log + point.getCoordinateX() + " " + point.getCoordinateY() + " " + point.getExx() + " " + point.getNumber() + "\n";
+        }
+        logWriter = new FileWriter(path + "log.txt");
+        logWriter.write(log);
+        logWriter.flush();
+        return log;
     }
 
     private void readLines(File file, ArrayList<Point> pointsMassive) throws IOException {
@@ -83,7 +97,7 @@ public class Logic {
             }
         }
         for (String s : lines) {
-            Point point = new Point(0, 0, 0);
+            Point point = new Point(0, 0, 0, 1);
             String[] split1 = s.split(" ");
 
             point.coordinateX = Double.parseDouble(split1[0]);

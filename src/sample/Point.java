@@ -7,11 +7,13 @@ public class Point {
     double coordinateX;
     double coordinateY;
     double Exx;
+    int number;
 
-    public Point(double coordinateX, double coordinateY, double Exx) {
+    public Point(double coordinateX, double coordinateY, double Exx, int number) {
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
         this.Exx = Exx;
+        this.number = number;
     }
 
     public double getCoordinateX() {
@@ -36,6 +38,19 @@ public class Point {
 
     public void setExx(double exx) {
         Exx = exx;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return coordinateX + " " + coordinateY + " " + Exx + " " + number;
     }
 
     @Override
