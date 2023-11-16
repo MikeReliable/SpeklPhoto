@@ -2,8 +2,10 @@ package sample;
 
 import java.io.*;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +17,7 @@ public class Logic {
     FileWriter fileWriter;
     FileWriter logWriter;
     boolean existence;
-    DecimalFormat df = new DecimalFormat("0.000000");
+    DecimalFormat df = new DecimalFormat("0.000000", new DecimalFormatSymbols(Locale.US));
     ArrayList<Point> pointsMassive;
     ArrayList<Point> pointsMassiveNext;
     String log;
