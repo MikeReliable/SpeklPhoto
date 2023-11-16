@@ -16,9 +16,10 @@ public class Logic {
     FileWriter logWriter;
     boolean existence;
     DecimalFormat df = new DecimalFormat("0.000000");
-    ArrayList<Point> pointsMassive = new ArrayList<>();
-    ArrayList<Point> pointsMassiveNext = new ArrayList<>();
+    ArrayList<Point> pointsMassive;
+    ArrayList<Point> pointsMassiveNext;
     String log;
+    int lastNum;
 
     public String find(File file) throws IOException {
 
@@ -35,17 +36,19 @@ public class Logic {
         matcher.find();
         int fileNum = Integer.parseInt(matcher.group());
 
+        pointsMassive = new ArrayList<>();
+        pointsMassiveNext = new ArrayList<>();
         try {
             readLines(file, pointsMassive);
         } catch (FileNotFoundException fileNotFoundException) {
             fileNotFoundException.printStackTrace();
         }
-
         for (int i = fileNum; i < 100; i++) {
             fileNum = fileNum + 1;
             fileName = path + fileNameCrop + fileNum + ".DAT";
             File fileNext = new File(fileName);
             if (fileNext.exists()) {
+                lastNum = fileNum;
                 log = log + fileName + "\n";
                 System.out.println(fileName);
                 pointsMassiveNext.clear();
@@ -68,7 +71,7 @@ public class Logic {
                 }
             }
         }
-        fileWriter = new FileWriter(path + "summ.DAT");
+        fileWriter = new FileWriter(path + "summ" + lastNum + ".DAT");
         for (Point point : pointsMassive) {
             String dfX = df.format(point.getCoordinateX());
             String dfY = df.format(point.getCoordinateY());
@@ -76,12 +79,15 @@ public class Logic {
             fileWriter.write(dfX + " " + dfY + " " + dfExx + "\n");
         }
         fileWriter.flush();
+        fileWriter.close();
+
         for (Point point : pointsMassive) {
             log = log + point.getCoordinateX() + " " + point.getCoordinateY() + " " + point.getExx() + " " + point.getNumber() + "\n";
         }
         logWriter = new FileWriter(path + "log.txt");
         logWriter.write(log);
         logWriter.flush();
+        logWriter.close();
         return log;
     }
 
